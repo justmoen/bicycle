@@ -1,0 +1,15 @@
+# config/packages/doctrine_mongodb.yaml
+doctrine_mongodb:
+  document_managers:
+    default:
+      auto_mapping: true
+      mappings:
+        App:
+          is_bundle: false
+          type: annotation
+          dir: '%kernel.project_dir%/src/Document'
+          prefix: 'App\Document'
+          alias: App
+  connections:
+    default:
+      server: '%env(resolve:MONGODB_URL)%'
