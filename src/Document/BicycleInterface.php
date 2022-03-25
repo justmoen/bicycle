@@ -2,19 +2,55 @@
 
 namespace App\Document;
 
-use MongoDB\Collection;
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 interface BicycleInterface
 {
-    function getComponents(): Collection;
+    /**
+     * @return string
+     */
+    function getId(): string;
 
-    function setComponents(Collection $components): static;
+    /**
+     * @MongoDB\PrePersist
+     */
+    public function onPrePersist();
 
+    /**
+     * @MongoDB\PreUpdate
+     */
+    public function onPreUpdate();
+
+    /**
+     * @return array
+     */
+    function getComponents(): array;
+
+    /**
+     * @param array $components
+     * @return BicycleInterface
+     */
+    function setComponents(array $components): BicycleInterface;
+
+    /**
+     * @return string
+     */
     function getType(): string;
 
-    function setType(string $type): static;
+    /**
+     * @param string $type
+     * @return BicycleInterface
+     */
+    function setType(string $type): BicycleInterface;
 
+    /**
+     * @return string
+     */
     function getName(): string;
 
-    function setName(string $name): static;
+    /**
+     * @param string $name
+     * @return BicycleInterface
+     */
+    function setName(string $name): BicycleInterface;
 }

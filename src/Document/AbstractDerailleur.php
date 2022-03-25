@@ -4,7 +4,7 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-abstract class AbstractDerailleur extends AbstractComponent
+abstract class AbstractDerailleur extends AbstractComponent implements ComponentInterface
 {
     /**
      * @MongoDB\Field(type="int")
@@ -21,12 +21,19 @@ abstract class AbstractDerailleur extends AbstractComponent
      */
     protected int $maxCogSize;
 
+    /**
+     * @return int
+     */
     public function getMaxCogCount(): int
     {
         return $this->maxCogCount;
     }
 
-    public function setMaxCogCount(int $maxCogCount): static
+    /**
+     * @param int $maxCogCount
+     * @return AbstractDerailleur
+     */
+    public function setMaxCogCount(int $maxCogCount): AbstractDerailleur
     {
         $this->maxCogCount = $maxCogCount;
         return $this;

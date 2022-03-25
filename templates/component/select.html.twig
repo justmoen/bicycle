@@ -1,0 +1,35 @@
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="/templates/css/main.css" />
+{% endblock %}
+{% block main %}
+    <div>
+        {% for componentType,componentSet in componentSets %}
+            <div>
+                <h3>{{ componentType }}</h3>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Weight'|trans }}</th>
+                        <th>{{ 'Price'|trans }}</th>
+                    </thead>
+                    <tbody>
+                        {% for component in componentSet %}
+                            <tr>
+                                <td class="columns">{{ component.name }}</td>
+                                <td class="columns">{{ component.weight }}</td>
+                                <td class="columns">{{ component.price }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+    <ul>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </ul>
+{% endblock %}

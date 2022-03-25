@@ -5,9 +5,9 @@ services:
     container_name: database
     image: mongo
     environment:
-      - MONGO_INITDB_DATABASE=Bicycle
-      - MONGO_INITDB_ROOT_USERNAME=app
-      - MONGO_INITDB_ROOT_PASSWORD=bicycle
+      - MONGO_INITDB_DATABASE=bicycle
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - ./db-data:/data/db
     ports:

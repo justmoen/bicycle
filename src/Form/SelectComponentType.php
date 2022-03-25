@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Form;
+
+use App\Document\AbstractComponent;
+use App\Document\FrontDerailleur;
+use App\Document\RearDerailleur;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class SelectComponentType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('componentType', ChoiceType::class, [
+                'label' => 'Select Component Type',
+                'choices' => [
+                    AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR => FrontDerailleur::class,
+                    AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR => RearDerailleur::class
+                ]
+            ])
+            ->add('submit', SubmitType::class);
+    }
+}

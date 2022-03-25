@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use App\Document\FrontDerailleur;
 use App\Document\RearDerailleur;
@@ -9,17 +9,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ComponentSelectionController extends AbstractController
+class ComponentSelectionApiController extends AbstractController
 {
+    /**
+     * @var CalculateGearCombinationCountService
+     */
     private CalculateGearCombinationCountService $calculateGearCombinationCountService;
 
+    /**
+     * @param CalculateGearCombinationCountService $calculateGearCombinationCountService
+     */
     public function __construct(
         CalculateGearCombinationCountService $calculateGearCombinationCountService
     ) {
         $this->calculateGearCombinationCountService = $calculateGearCombinationCountService;
     }
 
-    #[Route('/drivetrain')]
+    #[Route('api/drivetrain/get-gear-combination-count')]
     public function getGearCombinationCount(): JsonResponse
     {
         $frontDerailleur = new FrontDerailleur();

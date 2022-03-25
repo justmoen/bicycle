@@ -24,12 +24,19 @@ class ElectricBicycle extends AbstractBicycle implements BicycleInterface
         return $this->id;
     }
 
+    /**
+     * @return float
+     */
     public function getBatteryCapacity(): float
     {
         return $this->batteryCapacity;
     }
 
-    public function setBatteryCapacity(float $batteryCapacity): static
+    /**
+     * @param float $batteryCapacity
+     * @return ElectricBicycle
+     */
+    public function setBatteryCapacity(float $batteryCapacity): ElectricBicycle
     {
         $this->batteryCapacity = $batteryCapacity;
         return $this;
