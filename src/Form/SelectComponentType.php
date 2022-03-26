@@ -22,6 +22,6 @@ class SelectComponentType extends AbstractType
                     AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR => RearDerailleur::class
                 ]
             ])
-            ->add('submit', SubmitType::class);
+            ->add('next', SubmitType::class);
     }
 }

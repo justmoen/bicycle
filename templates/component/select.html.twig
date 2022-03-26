@@ -12,29 +12,5 @@
         {{ form_widget(form) }}
         {{ form_end(form) }}
     </div>
-    <div>
-        {% for componentType,componentSet in componentSets %}
-            <div>
-                <h3>{{ componentType }}</h3>
-            </div>
-            <div>
-                <table>
-                    <thead>
-                        {% for key, value in componentSet[0] %}
-                            <td>{{ key }}</td>
-                        {% endfor %}
-                    </thead>
-                    <tbody>
-                        {% for component in componentSet %}
-                            <tr>
-                                {% for key, value in component %}
-                                    <td>{{ value }}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% endfor %}
-    </div>
+    {% include 'component/list.html.twig' %}
 {% endblock %}

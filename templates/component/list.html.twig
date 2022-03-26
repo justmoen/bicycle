@@ -1,0 +1,30 @@
+<div>
+    {% for componentType,componentSet in componentSets %}
+        <div>
+            <h3>{{ componentType }}</h3>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    {% for key, value in componentSet[0] %}
+                        <th>{{ key }}</th>
+                    {% endfor %}
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                {% for component in componentSet %}
+                    <tr>
+                        {% for key, value in component %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                        <td>
+                            <div><a href="{{ path('component_edit', {type: componentType|replace({' ': ''}), id: component|first}) }}">Edit</a></div>
+                            <div><a href="{{ path('component_delete', {type: componentType|replace({' ': ''}), id: component|first}) }}">Delete</a></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+</div>
