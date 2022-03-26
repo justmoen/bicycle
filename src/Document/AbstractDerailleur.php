@@ -38,4 +38,40 @@ abstract class AbstractDerailleur extends AbstractComponent implements Component
         $this->maxCogCount = $maxCogCount;
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function getMinCogSize(): int
+    {
+        return $this->minCogSize;
+    }
+
+    /**
+     * @param int $minCogSize
+     * @return AbstractDerailleur
+     */
+    public function setMinCogSize(int $minCogSize): AbstractDerailleur
+    {
+        $this->minCogSize = $minCogSize;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxCogSize(): int
+    {
+        return $this->maxCogSize;
+    }
+
+    /**
+     * @param int $maxCogSize
+     * @return AbstractDerailleur
+     */
+    public function setMaxCogSize(int $maxCogSize): AbstractDerailleur
+    {
+        $this->maxCogSize = $maxCogSize;
+        return $this;
+    }
 }

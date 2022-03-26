@@ -1,7 +1,17 @@
+{% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="/templates/css/main.css" />
 {% endblock %}
-{% block main %}
+{% block body %}
+    <div>
+        <h2>Add Components</h2>
+    </div>
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
     <div>
         {% for componentType,componentSet in componentSets %}
             <div>
@@ -10,16 +20,16 @@
             <div>
                 <table>
                     <thead>
-                        <th>{{ 'Name'|trans }}</th>
-                        <th>{{ 'Weight'|trans }}</th>
-                        <th>{{ 'Price'|trans }}</th>
+                        {% for key, value in componentSet[0] %}
+                            <td>{{ key }}</td>
+                        {% endfor %}
                     </thead>
                     <tbody>
                         {% for component in componentSet %}
                             <tr>
-                                <td class="columns">{{ component.name }}</td>
-                                <td class="columns">{{ component.weight }}</td>
-                                <td class="columns">{{ component.price }}</td>
+                                {% for key, value in component %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -27,9 +37,4 @@
             </div>
         {% endfor %}
     </div>
-    <ul>
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-    </ul>
 {% endblock %}

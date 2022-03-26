@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-use App\Document\AbstractComponent;
 use App\Document\ComponentInterface;
 use App\Document\FrontDerailleur;
 use App\Document\RearDerailleur;
 use App\Form\AbstractComponentType;
 use App\Form\SelectComponentType;
+use App\Service\ComponentSetService;
 use App\Service\MatchClassToFormTypeService;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,33 +30,34 @@ class ComponentController extends AbstractController
     private DocumentManager $documentManager;
 
     /**
+     * @var ComponentSetService
+     */
+    private ComponentSetService $componentSetService;
+
+    /**
      * @param DocumentManager $documentManager
      * @param MatchClassToFormTypeService $matchClassToFormTypeService
+     * @param ComponentSetService $componentSetService
      */
     public function __construct(
         DocumentManager $documentManager,
-        MatchClassToFormTypeService $matchClassToFormTypeService
+        MatchClassToFormTypeService $matchClassToFormTypeService,
+        ComponentSetService $componentSetService
     ) {
         $this->documentManager = $documentManager;
         $this->matchClassToFormTypeService = $matchClassToFormTypeService;
+        $this->componentSetService = $componentSetService;
     }
 
     #[Route('component/select', name: 'component_select', methods: ["GET"])]
     public function select(): Response
     {
-        $componentSets = [
-            AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR =>
-                $this->documentManager->getRepository(FrontDerailleur::class)->findAll(),
-            AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR =>
-                $this->documentManager->getRepository(RearDerailleur::class)->findAll()
-            ];
-
         $form = $this->createForm(SelectComponentType::class);
 
         return $this->render('component/select.html.twig', [
             'form' => $form->createView(),
             'types' => [new FrontDerailleur(), new RearDerailleur()],
-            'componentSets' => $componentSets
+            'componentSets' => $this->componentSetService->getAll()
         ]);
     }
 
@@ -72,6 +74,7 @@ class ComponentController extends AbstractController
             );
         }
 
+        $this->addFlash('alert', 'Invalid entry');
         return $this->render('component/select.html.twig', [
             'form' => $form->createView()
         ]);
@@ -80,16 +83,18 @@ class ComponentController extends AbstractController
     #[Route('component/create/{class}', name: 'component_create', methods: ["GET"])]
     public function form(string $class): Response
     {
+        $newClass = new $class;
         $form = $this->createForm(
             $this->matchClassToFormTypeService->getTypeClass(
                 $class,
                 AbstractComponentType::class
-            ), new $class
+            ), $newClass
         );
 
         return $this->render('component/create.html.twig', [
             'form' => $form->createView(),
-            'class' => $class
+            'class' => $class,
+            'componentType' => $newClass->getType()
         ]);
     }
 
@@ -100,24 +105,26 @@ class ComponentController extends AbstractController
     public function formPost(
         Request $request,
         string $class
-    ) {
+    ): RedirectResponse {
+        $newClass = new $class;
         $form = $this->createForm(
             $this->matchClassToFormTypeService->getTypeClass(
                 $class,
                 AbstractComponentType::class
-            ), new $class
+            ), $newClass
         );
-        $newComponent = new $class;
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /**
              * @var ComponentInterface $component
              */
             $component = $form->getData();
-            $component->setType($newComponent->getType());
+            $component->setType($newClass->getType());
             $this->documentManager->persist($component);
             $this->documentManager->flush();
             return $this->redirectToRoute('component_select');
         }
+        $this->addFlash('alert', 'Invalid entry');
+        return $this->redirectToRoute('component_create');
     }
 }
