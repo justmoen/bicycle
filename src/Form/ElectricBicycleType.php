@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Form\Abstract\AbstractBicycleType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Document;
+namespace App\Document\Abstract;
 
+use App\Document\Interface\ComponentInterface;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 

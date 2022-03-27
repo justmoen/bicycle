@@ -2,9 +2,9 @@
 
 namespace App\Form;
 
-use App\Document\AbstractComponent;
-use App\Document\FrontDerailleur;
-use App\Document\RearDerailleur;
+use App\Document\Abstract\AbstractComponent;
+use App\Document\Component\FrontDerailleur;
+use App\Document\Component\RearDerailleur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

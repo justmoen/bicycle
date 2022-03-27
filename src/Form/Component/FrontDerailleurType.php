@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Component;
 
-use App\Document\FrontDerailleur;
+use App\Document\Component\FrontDerailleur;
+use App\Form\Abstract\AbstractComponentType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;

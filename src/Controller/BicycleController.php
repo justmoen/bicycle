@@ -2,24 +2,21 @@
 
 namespace App\Controller;
 
-use App\Document\BicycleInterface;
+use App\Document\Component\FrontDerailleur;
+use App\Document\Component\RearDerailleur;
 use App\Document\ElectricBicycle;
-use App\Document\FrontDerailleur;
+use App\Document\Interface\BicycleInterface;
 use App\Document\MountainBicycle;
-use App\Document\RearDerailleur;
 use App\Document\RoadBicycle;
 use App\Form\AbstractBicycleType;
 use App\Form\BicycleType;
 use App\Service\BicycleSetService;
 use App\Service\ComponentSetService;
 use App\Service\MatchClassToFormTypeService;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Doctrine\ODM\MongoDB\MongoDBException;
-use Doctrine\ODM\MongoDB\PersistentCollection;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

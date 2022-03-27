@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Document;
+namespace App\Document\Abstract;
 
+use App\Document\Interface\BicycleInterface;
+use App\Document\Interface\ComponentInterface;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Component;
 
+use App\Form\Abstract\AbstractComponentType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 

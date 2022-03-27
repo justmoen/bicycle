@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Document\AbstractBicycle;
+use App\Document\Abstract\AbstractBicycle;
 use App\Document\ElectricBicycle;
 use App\Document\MountainBicycle;
 use App\Document\RoadBicycle;

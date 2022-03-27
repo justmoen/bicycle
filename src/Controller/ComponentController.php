@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Document\ComponentInterface;
-use App\Document\FrontDerailleur;
-use App\Document\RearDerailleur;
+use App\Document\Component\FrontDerailleur;
+use App\Document\Component\RearDerailleur;
+use App\Document\Interface\ComponentInterface;
 use App\Form\AbstractComponentType;
 use App\Form\SelectComponentType;
 use App\Service\ComponentSetService;

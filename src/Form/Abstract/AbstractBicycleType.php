@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Abstract;
 
-use App\Document\FrontDerailleur;
-use App\Document\RearDerailleur;
+use App\Document\Component\FrontDerailleur;
+use App\Document\Component\RearDerailleur;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;

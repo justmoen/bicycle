@@ -2,8 +2,8 @@
 
 namespace App\Controller\Api;
 
-use App\Document\FrontDerailleur;
-use App\Document\RearDerailleur;
+use App\Document\Component\FrontDerailleur;
+use App\Document\Component\RearDerailleur;
 use App\Service\CalculateGearCombinationCountService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -2,6 +2,8 @@
 
 namespace App\Document;
 
+use App\Document\Abstract\AbstractBicycle;
+use App\Document\Interface\BicycleInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /** @MongoDB\Document */
