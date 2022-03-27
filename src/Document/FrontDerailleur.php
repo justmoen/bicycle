@@ -16,9 +16,9 @@ class FrontDerailleur extends AbstractDerailleur implements ComponentInterface
     private string $id;
 
     /**
-     * @var string
+     * @MongoDB\Field(type="string")
      */
-    private string $pullType;
+    private string $pullType = '';
 
     /**
      * @return string

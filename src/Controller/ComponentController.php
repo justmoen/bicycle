@@ -51,18 +51,24 @@ class ComponentController extends AbstractController
         $this->componentSetService = $componentSetService;
     }
 
+    /**
+     * @return Response
+     */
     #[Route('component/select', name: 'component_select', methods: ["GET"])]
     public function select(): Response
     {
         $form = $this->createForm(SelectComponentType::class);
-
         return $this->render('component/select.html.twig', [
             'form' => $form->createView(),
             'types' => [new FrontDerailleur(), new RearDerailleur()],
-            'componentSets' => $this->componentSetService->getAll()
+            'componentSets' => $this->componentSetService->getAll(true)
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     #[Route('component/select', name: 'component_select_post', methods: ["POST"])]
     public function selectPost(Request $request): Response
     {
@@ -80,10 +86,14 @@ class ComponentController extends AbstractController
         return $this->render('component/select.html.twig', [
             'form' => $form->createView(),
             'types' => [new FrontDerailleur(), new RearDerailleur()],
-            'componentSets' => $this->componentSetService->getAll()
+            'componentSets' => $this->componentSetService->getAll(true)
         ]);
     }
 
+    /**
+     * @param string $class
+     * @return Response
+     */
     #[Route('component/create/{class}', name: 'component_create', methods: ["GET"])]
     public function form(string $class): Response
     {
@@ -99,7 +109,7 @@ class ComponentController extends AbstractController
             'form' => $form->createView(),
             'class' => $class,
             'componentType' => $newClass->getType(),
-            'componentSets' => $this->componentSetService->getAll()
+            'componentSets' => $this->componentSetService->getAll(true)
         ]);
     }
 
@@ -133,6 +143,13 @@ class ComponentController extends AbstractController
         return $this->redirectToRoute('component_create');
     }
 
+    /**
+     * @param string $type
+     * @param string $id
+     * @return Response
+     * @throws LockException
+     * @throws MappingException
+     */
     #[Route('component/edit/{type}/{id}', name: 'component_edit', methods: ["GET"])]
     public function edit(string $type, string $id): Response
     {
@@ -149,7 +166,7 @@ class ComponentController extends AbstractController
             'form' => $form->createView(),
             'class' => $class,
             'componentType' => $component->getType(),
-            'componentSets' => $this->componentSetService->getAll()
+            'componentSets' => $this->componentSetService->getAll(true)
         ]);
     }
 

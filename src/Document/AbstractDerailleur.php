@@ -9,17 +9,17 @@ abstract class AbstractDerailleur extends AbstractComponent implements Component
     /**
      * @MongoDB\Field(type="int")
      */
-    protected int $maxCogCount;
+    protected int $maxCogCount = 0;
 
     /**
      * @MongoDB\Field(type="int")
      */
-    protected int $minCogSize;
+    protected int $minCogSize = 0;
 
     /**
      * @MongoDB\Field(type="int")
      */
-    protected int $maxCogSize;
+    protected int $maxCogSize = 0;
 
     /**
      * @return int

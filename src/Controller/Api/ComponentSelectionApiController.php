@@ -25,6 +25,9 @@ class ComponentSelectionApiController extends AbstractController
         $this->calculateGearCombinationCountService = $calculateGearCombinationCountService;
     }
 
+    /**
+     * @return JsonResponse
+     */
     #[Route('api/drivetrain/get-gear-combination-count')]
     public function getGearCombinationCount(): JsonResponse
     {

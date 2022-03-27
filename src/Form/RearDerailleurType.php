@@ -10,7 +10,9 @@ class RearDerailleurType extends AbstractComponentType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('minCogSize', IntegerType::class);
-        $builder->add('maxCogSize', IntegerType::class);
+        $builder
+            ->add('maxCogCount', IntegerType::class)
+            ->add('minCogSize', IntegerType::class)
+            ->add('maxCogSize', IntegerType::class);
     }
 }

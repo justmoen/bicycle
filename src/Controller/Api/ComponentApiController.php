@@ -22,6 +22,10 @@ class ComponentApiController extends AbstractController
         $this->crudService = $crudService;
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     #[Route('api/component/add', name: 'component_add', methods: ["POST"])]
     public function create(Request $request): JsonResponse
     {

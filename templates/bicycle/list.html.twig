@@ -1,0 +1,32 @@
+<div>
+    {% for bicycleType, bicycleSet in bicycleSets %}
+        <div>
+            <h3>{{ bicycleType }}</h3>
+        </div>
+        {% if bicycleSet|length > 0 %}
+        <div>
+            <table>
+                <thead>
+                {% for key, value in bicycleSet[0] %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+                <th>Action</th>
+                </thead>
+                <tbody>
+                {% for bicycle in bicycleSet %}
+                    <tr>
+                        {% for key, value in bicycle %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                        <td>
+                            <div><a href="{{ path('bicycle_edit', {type: bicycleType|replace({' ': ''}), id: bicycle|first}) }}">Edit</a></div>
+                            <div><a href="{{ path('bicycle_delete', {type: bicycleType|replace({' ': ''}), id: bicycle|first}) }}">Delete</a></div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -3,11 +3,11 @@
 {% block body %}
     <div><input type="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" /></div>
     <div>
-        <h2>Create {{ componentType }}</h2>
+        <h2>Create {{ bicycleType }}</h2>
     </div>
     {{ form_start(form) }}
     {{ form_widget(form.submit) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
-    {% include 'component/list.html.twig' %}
+    {% include 'bicycle/list.html.twig' %}
 {% endblock %}

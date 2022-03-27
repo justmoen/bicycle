@@ -3,6 +3,7 @@
         <div>
             <h3>{{ componentType }}</h3>
         </div>
+        {% if componentSet|length > 0 %}
         <div>
             <table>
                 <thead>
@@ -26,5 +27,6 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
     {% endfor %}
 </div>

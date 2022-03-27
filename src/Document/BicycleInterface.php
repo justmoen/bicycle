@@ -2,6 +2,7 @@
 
 namespace App\Document;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 interface BicycleInterface
@@ -22,15 +23,21 @@ interface BicycleInterface
     public function onPreUpdate();
 
     /**
-     * @return array
+     * @return Collection
      */
-    function getComponents(): array;
+    function getComponents(): Collection;
 
     /**
-     * @param array $components
+     * @param ComponentInterface $component
      * @return BicycleInterface
      */
-    function setComponents(array $components): BicycleInterface;
+    function addComponent(ComponentInterface $component): BicycleInterface;
+
+    /**
+     * @param ComponentInterface $component
+     * @return BicycleInterface
+     */
+    function removeComponent(ComponentInterface $component): BicycleInterface;
 
     /**
      * @return string
@@ -53,4 +60,26 @@ interface BicycleInterface
      * @return BicycleInterface
      */
     function setName(string $name): BicycleInterface;
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float;
+
+    /**
+     * @param float $price
+     * @return BicycleInterface
+     */
+    public function setPrice(float $price): BicycleInterface;
+
+    /**
+     * @return float
+     */
+    public function getWeight(): float;
+
+    /**
+     * @param float $weight
+     * @return BicycleInterface
+     */
+    public function setWeight(float $weight): BicycleInterface;
 }

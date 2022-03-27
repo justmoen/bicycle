@@ -2,6 +2,9 @@
 
 namespace App\Document;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+
+/** @MongoDB\Document */
 class MountainBicycle extends AbstractBicycle implements BicycleInterface
 {
     /**
@@ -20,6 +23,14 @@ class MountainBicycle extends AbstractBicycle implements BicycleInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return AbstractBicycle::BICYCLE_TYPE_MOUNTAIN;
     }
 
     /**

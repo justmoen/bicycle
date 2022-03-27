@@ -25,6 +25,14 @@ class ElectricBicycle extends AbstractBicycle implements BicycleInterface
     }
 
     /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return AbstractBicycle::BICYCLE_TYPE_ELECTRIC;
+    }
+
+    /**
      * @return float
      */
     public function getBatteryCapacity(): float

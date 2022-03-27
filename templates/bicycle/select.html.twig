@@ -6,12 +6,12 @@
 {% block body %}
     <div><input type="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" /></div>
     <div>
-        <h2>Add Components</h2>
+        <h2>Build Bicycle</h2>
     </div>
     <div>
         {{ form_start(form) }}
         {{ form_widget(form) }}
         {{ form_end(form) }}
     </div>
-    {% include 'component/list.html.twig' %}
+    {% include 'bicycle/list.html.twig' %}
 {% endblock %}

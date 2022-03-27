@@ -3,14 +3,20 @@
 namespace App\Document;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 abstract class AbstractBicycle implements BicycleInterface
 {
+    public const BICYCLE_TYPE_ELECTRIC = 'Electric';
+    public const BICYCLE_TYPE_ROAD = 'Road';
+    public const BICYCLE_TYPE_MOUNTAIN = 'Mountain';
+
     /**
-     * @MongoDB\EmbedMany(targetDocument=ComponentInterface::class)
+     * @MongoDB\ReferenceMany()
      */
-    protected array $components = [];
+    protected Collection $components;
 
     /**
      * @MongoDB\Field(type="string")
@@ -23,6 +29,16 @@ abstract class AbstractBicycle implements BicycleInterface
     protected string $name;
 
     /**
+     * @MongoDB\Field(type="float")
+     */
+    protected float $price;
+
+    /**
+     * @MongoDB\Field(type="float")
+     */
+    protected float $weight;
+
+    /**
      * @var DateTime
      */
     protected DateTime $createdAt;
@@ -31,6 +47,11 @@ abstract class AbstractBicycle implements BicycleInterface
      * @var DateTime
      */
     protected DateTime $updatedAt;
+
+    public function __construct()
+    {
+        $this->components = new ArrayCollection();
+    }
 
     /**
      * @MongoDB\PrePersist
@@ -49,20 +70,30 @@ abstract class AbstractBicycle implements BicycleInterface
     }
 
     /**
-     * @return array
+     * @return Collection
      */
-    public function getComponents(): array
+    public function getComponents(): Collection
     {
         return $this->components;
     }
 
     /**
-     * @param array $components
+     * @param ComponentInterface $component
      * @return AbstractBicycle
      */
-    public function setComponents(array $components): AbstractBicycle
+    public function addComponent(ComponentInterface $component): AbstractBicycle
     {
-        $this->components = $components;
+        $this->components[] = $component;
+        return $this;
+    }
+
+    /**
+     * @param ComponentInterface $component
+     * @return AbstractBicycle
+     */
+    public function removeComponent(ComponentInterface $component): AbstractBicycle
+    {
+        $this->components->removeElement($component);
         return $this;
     }
 
@@ -99,6 +130,42 @@ abstract class AbstractBicycle implements BicycleInterface
     public function setName(string $name): AbstractBicycle
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float $price
+     * @return AbstractBicycle
+     */
+    public function setPrice(float $price): AbstractBicycle
+    {
+        $this->price = $price;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWeight(): float
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param float $weight
+     * @return AbstractBicycle
+     */
+    public function setWeight(float $weight): AbstractBicycle
+    {
+        $this->weight = $weight;
         return $this;
     }
 }
