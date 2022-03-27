@@ -13,13 +13,31 @@ class FrontDerailleurType extends AbstractComponentType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->add('maxCogCount', IntegerType::class)
-            ->add('minCogSize', IntegerType::class)
-            ->add('maxCogSize', IntegerType::class)
+            ->add('maxCogCount', IntegerType::class, [
+                'attr' => [
+                    'min' => 1,
+                    'max' => 3
+                    ],
+                'data' => 1
+            ])
+            ->add('minCogSize', IntegerType::class, [
+                'attr' => [
+                    'min' => 9,
+                    'max' => 15
+                    ],
+                'data' => 9
+            ])
+            ->add('maxCogSize', IntegerType::class, [
+                'attr' => [
+                    'min' => 26,
+                    'max' => 56
+                    ],
+                'data' => 26
+            ])
             ->add('pullType', ChoiceType::class, [
-            'choices' => [
-                FrontDerailleur::PULL_TYPE_UP => FrontDerailleur::PULL_TYPE_UP,
-                FrontDerailleur::PULL_TYPE_DOWN => FrontDerailleur::PULL_TYPE_DOWN
+                'choices' => [
+                    FrontDerailleur::PULL_TYPE_UP => FrontDerailleur::PULL_TYPE_UP,
+                    FrontDerailleur::PULL_TYPE_DOWN => FrontDerailleur::PULL_TYPE_DOWN
             ]
         ]);
     }
