@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use Exception;
 use ReflectionObject;
 
 class ObjectToArrayService

@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CalculateGearCombinationCountServiceTest extends KernelTestCase
 {
+    /**
+     * @var CalculateGearCombinationCountService
+     */
     private CalculateGearCombinationCountService $service;
 
     public function setUp(): void
