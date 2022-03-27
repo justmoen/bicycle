@@ -15,13 +15,17 @@ trait BicycleTrait
      */
     public function getForm(string $class, BicycleInterface $bicycle): FormInterface
     {
+        $options = ['componentSets' => $this->componentSetService->getAll()];
+        foreach ($bicycle->getComponents() as $component) {
+            $options[$component->getType()] = $component;
+        }
         return $this->createForm(
             $this->matchClassToFormTypeService->getTypeClass(
                 $class,
                 AbstractBicycleType::class
             ),
             $bicycle,
-            ['componentSets' => $this->componentSetService->getAll()]
+            $options
         );
     }
 }

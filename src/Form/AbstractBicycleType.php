@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Document\Component\AbstractComponent;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use Doctrine\Bundle\MongoDBBundle\Form\Type\DocumentType;
@@ -22,12 +23,14 @@ abstract class AbstractBicycleType extends AbstractType
             ->add('frontDerailleur', DocumentType::class, [
                 'class' => FrontDerailleur::class,
                 'mapped' => false,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'data' => $options[AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR]
             ])
             ->add('rearDerailleur', DocumentType::class, [
                 'class' => RearDerailleur::class,
                 'mapped' => false,
-                'choice_label' => 'name'
+                'choice_label' => 'name',
+                'data' => $options[AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR]
             ])
             ->add('submit', SubmitType::class);
     }
@@ -38,7 +41,9 @@ abstract class AbstractBicycleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'componentSets' => []
+            'componentSets' => [],
+            AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR => null,
+            AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR => null
         ]);
     }
 
