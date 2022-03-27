@@ -2,7 +2,6 @@
 
 namespace App\Document\Component;
 
-use App\Document\Abstract\AbstractDerailleur;
 use App\Document\Interface\ComponentInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 

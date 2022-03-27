@@ -2,17 +2,15 @@
 
 namespace App\Controller;
 
-use App\Document\Component\FrontDerailleur;
-use App\Document\Component\RearDerailleur;
 use App\Document\ElectricBicycle;
-use App\Document\Interface\BicycleInterface;
 use App\Document\MountainBicycle;
 use App\Document\RoadBicycle;
-use App\Form\AbstractBicycleType;
 use App\Form\BicycleType;
+use App\Service\BicycleDataService;
 use App\Service\BicycleSetService;
 use App\Service\ComponentSetService;
 use App\Service\MatchClassToFormTypeService;
+use App\Traits\BicycleTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
@@ -25,6 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class BicycleController extends AbstractController
 {
+    use BicycleTrait;
+
     /**
      * @var MatchClassToFormTypeService
      */
@@ -46,21 +46,29 @@ class BicycleController extends AbstractController
     private BicycleSetService $bicycleSetService;
 
     /**
+     * @var BicycleDataService
+     */
+    private BicycleDataService $bicycleDataService;
+
+    /**
      * @param DocumentManager $documentManager
      * @param MatchClassToFormTypeService $matchClassToFormTypeService
      * @param ComponentSetService $componentSetService
      * @param BicycleSetService $bicycleSetService
+     * @param BicycleDataService $bicycleDataService
      */
     public function __construct(
         DocumentManager $documentManager,
         MatchClassToFormTypeService $matchClassToFormTypeService,
         ComponentSetService $componentSetService,
-        BicycleSetService $bicycleSetService
+        BicycleSetService $bicycleSetService,
+        BicycleDataService $bicycleDataService
     ) {
         $this->documentManager = $documentManager;
         $this->matchClassToFormTypeService = $matchClassToFormTypeService;
         $this->componentSetService = $componentSetService;
         $this->bicycleSetService = $bicycleSetService;
+        $this->bicycleDataService = $bicycleDataService;
     }
 
     /**
@@ -109,15 +117,7 @@ class BicycleController extends AbstractController
     public function form(string $class): Response
     {
         $newClass = new $class;
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractBicycleType::class
-            ),
-            $newClass,
-            ['componentSets' => $this->componentSetService->getAll()]
-        );
-
+        $form = $this->getForm($class, $newClass);
         return $this->render('bicycle/build.html.twig', [
             'form' => $form->createView(),
             'class' => $class,
@@ -135,48 +135,21 @@ class BicycleController extends AbstractController
         string $class
     ): RedirectResponse {
         $newClass = new $class;
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractBicycleType::class
-            ),
-            $newClass,
-            ['componentSets' => $this->componentSetService->getAll()]
-        );
+        $form = $this->getForm($class, $newClass);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var BicycleInterface $bicycle
-             */
-            $bicycle = $form->getData();
-            /**
-             * @var FrontDerailleur $frontDerailleur
-             */
-            $frontDerailleur = $form->get('frontDerailleur')->getData();
-            /**
-             * @var RearDerailleur $rearDerailleur
-             */
-            $rearDerailleur = $form->get('rearDerailleur')->getData();
-            $bicycle->setType($newClass->getType());
-            if (
-                $frontDerailleur &&
-                $rearDerailleur
-            ) {
-                $bicycle
-                    ->addComponent($frontDerailleur)
-                    ->addComponent($rearDerailleur);
-            } else {
-                $this->addFlash('alert', 'Create Components First!');
-                return $this->redirectToRoute('bicycle_build', [
-                    'class' => $class
-                ]);
+            if ($bicycle = $this->bicycleDataService->processFormData(
+                $form,
+                $newClass
+            )) {
+                $this->documentManager->persist($bicycle);
+                $this->documentManager->flush();
+                return $this->redirectToRoute('bicycle_select');
             }
-
-            $bicycle->setPrice($frontDerailleur->getPrice() + $rearDerailleur->getPrice());
-            $bicycle->setWeight($frontDerailleur->getWeight() + $rearDerailleur->getWeight());
-            $this->documentManager->persist($bicycle);
-            $this->documentManager->flush();
-            return $this->redirectToRoute('bicycle_select');
+            $this->addFlash('alert', 'Create Components First!');
+            return $this->redirectToRoute('bicycle_build', [
+                'class' => $class
+            ]);
         }
         $this->addFlash('alert', 'Invalid entry');
         return $this->redirectToRoute('bicycle_build', [
@@ -196,15 +169,7 @@ class BicycleController extends AbstractController
     {
         $class = '\\App\\Document\\' . $type . 'Bicycle';
         $bicycle = $this->documentManager->getRepository($class)->find($id);
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractBicycleType::class
-            ),
-            $bicycle,
-            ['componentSets' => $this->componentSetService->getAll()]
-        );
-
+        $form = $this->getForm($class, $bicycle);
         return $this->render('bicycle/build.html.twig', [
             'form' => $form->createView(),
             'class' => $class,
@@ -223,16 +188,13 @@ class BicycleController extends AbstractController
     {
         $class = '\\App\\Document\\' . $type . 'Bicycle';
         $bicycle = $this->documentManager->getRepository($class)->find($id);
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractBicycleType::class
-            ),
-            $bicycle,
-            ['componentSets' => $this->componentSetService->getAll()]
+        $form = $this->getForm(
+            $class,
+            $bicycle
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->bicycleDataService->processFormData($form, new $class);
             $this->documentManager->flush();
             return $this->redirectToRoute('bicycle_select');
         }

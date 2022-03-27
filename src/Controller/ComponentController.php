@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
-use App\Document\Interface\ComponentInterface;
-use App\Form\AbstractComponentType;
 use App\Form\SelectComponentType;
+use App\Service\ComponentDataService;
 use App\Service\ComponentSetService;
 use App\Service\MatchClassToFormTypeService;
+use App\Traits\ComponentTrait;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
@@ -21,6 +21,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ComponentController extends AbstractController
 {
+    use ComponentTrait;
+
     /**
      * @var MatchClassToFormTypeService
      */
@@ -37,18 +39,26 @@ class ComponentController extends AbstractController
     private ComponentSetService $componentSetService;
 
     /**
+     * @var ComponentDataService
+     */
+    private ComponentDataService $componentDataService;
+
+    /**
      * @param DocumentManager $documentManager
      * @param MatchClassToFormTypeService $matchClassToFormTypeService
      * @param ComponentSetService $componentSetService
+     * @param ComponentDataService $componentDataService
      */
     public function __construct(
         DocumentManager $documentManager,
         MatchClassToFormTypeService $matchClassToFormTypeService,
-        ComponentSetService $componentSetService
+        ComponentSetService $componentSetService,
+        ComponentDataService $componentDataService
     ) {
         $this->documentManager = $documentManager;
         $this->matchClassToFormTypeService = $matchClassToFormTypeService;
         $this->componentSetService = $componentSetService;
+        $this->componentDataService = $componentDataService;
     }
 
     /**
@@ -98,13 +108,7 @@ class ComponentController extends AbstractController
     public function form(string $class): Response
     {
         $newClass = new $class;
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractComponentType::class
-            ), $newClass
-        );
-
+        $form = $this->getForm($class, $newClass);
         return $this->render('component/create.html.twig', [
             'form' => $form->createView(),
             'class' => $class,
@@ -122,19 +126,13 @@ class ComponentController extends AbstractController
         string $class
     ): RedirectResponse {
         $newClass = new $class;
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractComponentType::class
-            ), $newClass
-        );
+        $form = $this->getForm($class, $newClass);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var ComponentInterface $component
-             */
-            $component = $form->getData();
-            $component->setType($newClass->getType());
+            $component = $this->componentDataService->processFormData(
+                $form,
+                $newClass
+            );
             $this->documentManager->persist($component);
             $this->documentManager->flush();
             return $this->redirectToRoute('component_select');
@@ -155,13 +153,7 @@ class ComponentController extends AbstractController
     {
         $class = '\\App\\Document\\' . $type;
         $component = $this->documentManager->getRepository($class)->find($id);
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractComponentType::class
-            ), $component
-        );
-
+        $form = $this->getForm($class, $component);
         return $this->render('component/create.html.twig', [
             'form' => $form->createView(),
             'class' => $class,
@@ -180,12 +172,7 @@ class ComponentController extends AbstractController
     {
         $class = '\\App\\Document\\' . $type;
         $component = $this->documentManager->getRepository($class)->find($id);
-        $form = $this->createForm(
-            $this->matchClassToFormTypeService->getTypeClass(
-                $class,
-                AbstractComponentType::class
-            ), $component
-        );
+        $form = $this->getForm($class, $component);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->documentManager->flush();

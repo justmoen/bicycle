@@ -10,7 +10,7 @@ interface BicycleInterface
     /**
      * @return string
      */
-    function getId(): string;
+    public function getId(): string;
 
     /**
      * @MongoDB\PrePersist
@@ -25,41 +25,46 @@ interface BicycleInterface
     /**
      * @return Collection
      */
-    function getComponents(): Collection;
+    public function getComponents(): Collection;
 
     /**
      * @param ComponentInterface $component
      * @return BicycleInterface
      */
-    function addComponent(ComponentInterface $component): BicycleInterface;
+    public function addComponent(ComponentInterface $component): BicycleInterface;
 
     /**
      * @param ComponentInterface $component
      * @return BicycleInterface
      */
-    function removeComponent(ComponentInterface $component): BicycleInterface;
+    public function removeComponent(ComponentInterface $component): BicycleInterface;
+
+    /**
+     * @return BicycleInterface
+     */
+    public function removeAllComponents(): BicycleInterface;
 
     /**
      * @return string
      */
-    function getType(): string;
+    public function getType(): string;
 
     /**
      * @param string $type
      * @return BicycleInterface
      */
-    function setType(string $type): BicycleInterface;
+    public function setType(string $type): BicycleInterface;
 
     /**
      * @return string
      */
-    function getName(): string;
+    public function getName(): string;
 
     /**
      * @param string $name
      * @return BicycleInterface
      */
-    function setName(string $name): BicycleInterface;
+    public function setName(string $name): BicycleInterface;
 
     /**
      * @return float

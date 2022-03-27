@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Document\Abstract;
+namespace App\Document\Component;
 
 use App\Document\Interface\ComponentInterface;
 use DateTime;

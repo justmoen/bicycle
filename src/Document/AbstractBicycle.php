@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Document\Abstract;
+namespace App\Document;
 
 use App\Document\Interface\BicycleInterface;
 use App\Document\Interface\ComponentInterface;
@@ -96,6 +96,17 @@ abstract class AbstractBicycle implements BicycleInterface
     public function removeComponent(ComponentInterface $component): AbstractBicycle
     {
         $this->components->removeElement($component);
+        return $this;
+    }
+
+    /**
+     * @return AbstractBicycle
+     */
+    public function removeAllComponents(): AbstractBicycle
+    {
+        foreach ($this->components as $component) {
+            $this->components->removeElement($component);
+        }
         return $this;
     }
 

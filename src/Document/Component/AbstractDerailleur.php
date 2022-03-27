@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Document\Abstract;
+namespace App\Document\Component;
 
 use App\Document\Interface\ComponentInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;

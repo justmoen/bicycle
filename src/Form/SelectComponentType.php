@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Document\Abstract\AbstractComponent;
+use App\Document\Component\AbstractComponent;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use Symfony\Component\Form\AbstractType;

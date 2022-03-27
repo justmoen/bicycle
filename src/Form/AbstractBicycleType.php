@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Abstract;
+namespace App\Form;
 
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
