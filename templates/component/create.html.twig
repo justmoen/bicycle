@@ -5,6 +5,7 @@
     <div>
         <h2>Create {{ componentType }}</h2>
     </div>
+    {% include 'showFlash.html.twig' %}
     {{ form_start(form) }}
     {{ form_widget(form.submit) }}
     {{ form_widget(form) }}

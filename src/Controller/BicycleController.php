@@ -19,6 +19,7 @@ use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
 use Doctrine\ODM\MongoDB\MongoDBException;
 use Doctrine\ODM\MongoDB\PersistentCollection;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -160,9 +161,20 @@ class BicycleController extends AbstractController
              */
             $rearDerailleur = $form->get('rearDerailleur')->getData();
             $bicycle->setType($newClass->getType());
-            $bicycle
-                ->addComponent($frontDerailleur)
-                ->addComponent($rearDerailleur);
+            if (
+                $frontDerailleur &&
+                $rearDerailleur
+            ) {
+                $bicycle
+                    ->addComponent($frontDerailleur)
+                    ->addComponent($rearDerailleur);
+            } else {
+                $this->addFlash('alert', 'Create Components First!');
+                return $this->redirectToRoute('bicycle_build', [
+                    'class' => $class
+                ]);
+            }
+
             $bicycle->setPrice($frontDerailleur->getPrice() + $rearDerailleur->getPrice());
             $bicycle->setWeight($frontDerailleur->getWeight() + $rearDerailleur->getWeight());
             $this->documentManager->persist($bicycle);
@@ -170,7 +182,9 @@ class BicycleController extends AbstractController
             return $this->redirectToRoute('bicycle_select');
         }
         $this->addFlash('alert', 'Invalid entry');
-        return $this->redirectToRoute('bicycle_build');
+        return $this->redirectToRoute('bicycle_build', [
+            'class' => $class
+        ]);
     }
 
     /**
@@ -226,7 +240,10 @@ class BicycleController extends AbstractController
             return $this->redirectToRoute('bicycle_select');
         }
         $this->addFlash('alert', 'Invalid entry');
-        return $this->redirectToRoute('bicycle_edit');
+        return $this->redirectToRoute('bicycle_edit', [
+            'id' => $id,
+            'type' => $type
+        ]);
     }
 
     /**
@@ -242,6 +259,9 @@ class BicycleController extends AbstractController
         $this->documentManager->remove($bicycle);
         $this->documentManager->flush();
         $this->addFlash('success', 'Bicycle successfully removed');
-        return $this->redirectToRoute('bicycle_select');
+        return $this->redirectToRoute('bicycle_select', [
+            'id' => $id,
+            'type' => $type
+        ]);
     }
 }
