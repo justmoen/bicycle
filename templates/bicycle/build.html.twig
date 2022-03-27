@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
-
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        const route = "{{ path('get_max_gear_combination_count')|escape('js') }}";
+    </script>
+    {{ encore_entry_script_tags('specifications') }}
+{% endblock %}
 {% block body %}
     <div><input type="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" /></div>
     <div>
