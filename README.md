@@ -10,7 +10,8 @@ Doctrine ODM with NoSQL (MongoDB),
 Twig,
 API usage,
 SOLID principles,
-minor Frontend use
+minor Frontend use,
+Unit Testing
 
 run docker compose up from bicycle/docker directory
 
