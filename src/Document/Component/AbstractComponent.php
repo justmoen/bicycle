@@ -6,11 +6,24 @@ use App\Document\Interface\ComponentInterface;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
+/**
+ * @MongoDB\Document("Component")
+ * @MongoDB\InheritanceType("SINGLE_COLLECTION")
+ * @MongoDB\DiscriminatorField("type")
+ * @MongoDB\DiscriminatorMap({
+ *     AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR=FrontDerailleur::class,
+ *     AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR=RearDerailleur::class,
+ *     })
+ */
 abstract class AbstractComponent implements ComponentInterface
 {
-    public const COMPONENT_COLLECTION = 'Component';
     public const COMPONENT_TYPE_FRONT_DERAILLEUR = 'Front Derailleur';
     public const COMPONENT_TYPE_REAR_DERAILLEUR = 'Rear Derailleur';
+
+    /**
+     * @MongoDB\Id
+     */
+    protected string $id;
 
     /**
      * @MongoDB\Field(type="float")
@@ -21,11 +34,6 @@ abstract class AbstractComponent implements ComponentInterface
      * @MongoDB\Field(type="string")
      */
     protected string $name;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected string $type;
 
     /**
      * @MongoDB\Field(type="float")
@@ -41,6 +49,19 @@ abstract class AbstractComponent implements ComponentInterface
      * @var DateTime
      */
     protected DateTime $updatedAt;
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getType(): string;
 
     /**
      * @MongoDB\PrePersist
@@ -91,24 +112,6 @@ abstract class AbstractComponent implements ComponentInterface
     public function setName(string $name): AbstractComponent
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     * @return AbstractComponent
-     */
-    public function setType(string $type): AbstractComponent
-    {
-        $this->type = $type;
         return $this;
     }
 

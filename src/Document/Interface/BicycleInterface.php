@@ -47,17 +47,6 @@ interface BicycleInterface
     /**
      * @return string
      */
-    public function getType(): string;
-
-    /**
-     * @param string $type
-     * @return BicycleInterface
-     */
-    public function setType(string $type): BicycleInterface;
-
-    /**
-     * @return string
-     */
     public function getName(): string;
 
     /**

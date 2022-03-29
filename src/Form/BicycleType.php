@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Document\AbstractBicycle;
+use App\Document\Bicycle;
 use App\Document\ElectricBicycle;
 use App\Document\MountainBicycle;
 use App\Document\RoadBicycle;
@@ -19,9 +19,9 @@ class BicycleType extends AbstractType
             ->add('bicycleType', ChoiceType::class, [
                 'label' => 'Select Bicycle Type',
                 'choices' => [
-                    AbstractBicycle::BICYCLE_TYPE_ELECTRIC => ElectricBicycle::class,
-                    AbstractBicycle::BICYCLE_TYPE_ROAD => RoadBicycle::class,
-                    AbstractBicycle::BICYCLE_TYPE_MOUNTAIN => MountainBicycle::class
+                    Bicycle::BICYCLE_TYPE_ELECTRIC => ElectricBicycle::class,
+                    Bicycle::BICYCLE_TYPE_ROAD => RoadBicycle::class,
+                    Bicycle::BICYCLE_TYPE_MOUNTAIN => MountainBicycle::class
                 ]
             ])
             ->add('next', SubmitType::class);

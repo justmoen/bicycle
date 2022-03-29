@@ -12,11 +12,6 @@ class FrontDerailleur extends AbstractDerailleur implements ComponentInterface
     public const PULL_TYPE_DOWN = 'DOWN';
 
     /**
-     * @MongoDB\Id
-     */
-    private string $id;
-
-    /**
      * @MongoDB\Field(type="string")
      */
     private string $pullType = '';
@@ -24,9 +19,9 @@ class FrontDerailleur extends AbstractDerailleur implements ComponentInterface
     /**
      * @return string
      */
-    public function getId(): string
+    public function getType(): string
     {
-        return $this->id;
+        return parent::COMPONENT_TYPE_FRONT_DERAILLEUR;
     }
 
     /**
@@ -44,24 +39,6 @@ class FrontDerailleur extends AbstractDerailleur implements ComponentInterface
     public function setPullType(string $pullType): FrontDerailleur
     {
         $this->pullType = $pullType;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR;
-    }
-
-    /**
-     * @param string $type
-     * @return $this
-     */
-    public function setType(string $type): FrontDerailleur
-    {
-        $this->type = $type;
         return $this;
     }
 }

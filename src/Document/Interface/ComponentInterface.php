@@ -44,17 +44,6 @@ interface ComponentInterface
     public function setName(string $name): ComponentInterface;
 
     /**
-     * @return string
-     */
-    public function getType(): string;
-
-    /**
-     * @param string $type
-     * @return ComponentInterface
-     */
-    public function setType(string $type): ComponentInterface;
-
-    /**
      * @return float
      */
     public function getWeight(): float;

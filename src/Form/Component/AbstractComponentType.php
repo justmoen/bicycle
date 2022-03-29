@@ -17,7 +17,6 @@ abstract class AbstractComponentType extends AbstractType
         $builder
             ->add('price', MoneyType::class)
             ->add('name', TextType::class)
-            ->add('type', HiddenType::class)
             ->add('weight', NumberType::class)
             ->add('submit', SubmitType::class);
     }

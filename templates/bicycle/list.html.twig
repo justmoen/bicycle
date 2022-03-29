@@ -19,8 +19,8 @@
                             <td>{{ value }}</td>
                         {% endfor %}
                         <td>
-                            <div><a href="{{ path('bicycle_edit', {type: bicycleType|replace({' ': ''}), id: bicycle|first}) }}">Edit</a></div>
-                            <div><a href="{{ path('bicycle_delete', {type: bicycleType|replace({' ': ''}), id: bicycle|first}) }}">Delete</a></div>
+                            <div><a href="{{ path('bicycle_edit', {id: bicycle.Id}) }}">Edit</a></div>
+                            <div><a href="{{ path('bicycle_delete', {id: bicycle.Id}) }}">Delete</a></div>
                         </td>
                     </tr>
                 {% endfor %}

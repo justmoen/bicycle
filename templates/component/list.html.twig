@@ -19,8 +19,8 @@
                             <td>{{ value }}</td>
                         {% endfor %}
                         <td>
-                            <div><a href="{{ path('component_edit', {type: componentType|replace({' ': ''}), id: component|first}) }}">Edit</a></div>
-                            <div><a href="{{ path('component_delete', {type: componentType|replace({' ': ''}), id: component|first}) }}">Delete</a></div>
+                            <div><a href="{{ path('component_edit', {id: component.Id}) }}">Edit</a></div>
+                            <div><a href="{{ path('component_delete', {id: component.Id}) }}">Delete</a></div>
                         </td>
                     </tr>
                 {% endfor %}

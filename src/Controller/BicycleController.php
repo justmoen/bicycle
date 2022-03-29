@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\Bicycle;
 use App\Document\ElectricBicycle;
 use App\Document\MountainBicycle;
 use App\Document\RoadBicycle;
@@ -139,8 +140,7 @@ class BicycleController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($bicycle = $this->bicycleDataService->processFormData(
-                $form,
-                $newClass
+                $form
             )) {
                 $this->documentManager->persist($bicycle);
                 $this->documentManager->flush();
@@ -158,22 +158,21 @@ class BicycleController extends AbstractController
     }
 
     /**
-     * @param string $type
      * @param string $id
      * @return Response
      * @throws LockException
      * @throws MappingException
      */
-    #[Route('bicycle/edit/{type}/{id}', name: 'bicycle_edit', methods: ["GET"])]
-    public function edit(string $type, string $id): Response
+    #[Route('bicycle/edit/{id}', name: 'bicycle_edit', methods: ["GET"])]
+    public function edit(string $id): Response
     {
-        $class = '\\App\\Document\\' . $type . 'Bicycle';
-        $bicycle = $this->documentManager->getRepository($class)->find($id);
+        $bicycle = $this->documentManager->getRepository(Bicycle::class)->find($id);
+        $class = get_class($bicycle);
         $form = $this->getForm($class, $bicycle);
         return $this->render('bicycle/build.html.twig', [
             'form' => $form->createView(),
             'class' => $class,
-            'bicycleType' => $bicycle->getType(),
+            'bicycleType' => $class,
             'bicycleSets' => $this->bicycleSetService->getAll()
         ]);
     }
@@ -183,25 +182,24 @@ class BicycleController extends AbstractController
      * @throws MongoDBException
      * @throws LockException
      */
-    #[Route('bicycle/edit/{type}/{id}', name: 'bicycle_edit_post', methods: ["POST"])]
-    public function editPost(Request $request, string $type, string $id): Response
+    #[Route('bicycle/edit/{id}', name: 'bicycle_edit_post', methods: ["POST"])]
+    public function editPost(Request $request, string $id): Response
     {
-        $class = '\\App\\Document\\' . $type . 'Bicycle';
-        $bicycle = $this->documentManager->getRepository($class)->find($id);
+        $bicycle = $this->documentManager->getRepository(Bicycle::class)->find($id);
+        $class = get_class($bicycle);
         $form = $this->getForm(
             $class,
             $bicycle
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bicycleDataService->processFormData($form, new $class);
+            $this->bicycleDataService->processFormData($form);
             $this->documentManager->flush();
             return $this->redirectToRoute('bicycle_select');
         }
         $this->addFlash('alert', 'Invalid entry');
         return $this->redirectToRoute('bicycle_edit', [
-            'id' => $id,
-            'type' => $type
+            'id' => $id
         ]);
     }
 
@@ -210,17 +208,15 @@ class BicycleController extends AbstractController
      * @throws LockException
      * @throws MongoDBException
      */
-    #[Route('bicycle/delete/{type}/{id}', name: 'bicycle_delete', methods: ["GET"])]
-    public function delete(string $type, string $id): RedirectResponse
+    #[Route('bicycle/delete/{id}', name: 'bicycle_delete', methods: ["GET"])]
+    public function delete(string $id): RedirectResponse
     {
-        $class = '\\App\\Document\\' . $type . 'Bicycle';
-        $bicycle = $this->documentManager->getRepository($class)->find($id);
+        $bicycle = $this->documentManager->getRepository(Bicycle::class)->find($id);
         $this->documentManager->remove($bicycle);
         $this->documentManager->flush();
         $this->addFlash('success', 'Bicycle successfully removed');
         return $this->redirectToRoute('bicycle_select', [
-            'id' => $id,
-            'type' => $type
+            'id' => $id
         ]);
     }
 }

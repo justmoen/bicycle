@@ -46,10 +46,11 @@ class ComponentSelectionApiController extends AbstractController
     #[Route('api/drivetrain/get-max-gear-combination-count', name: 'get_max_gear_combination_count',  methods: ["POST"])]
     public function getMaxGearCombinationCount(Request $request): JsonResponse
     {
+        $data = json_decode($request->getContent(), true);
         $frontDerailleur = $this->documentManager
-            ->getRepository(FrontDerailleur::class)->find($request->get('frontId'));
+            ->getRepository(FrontDerailleur::class)->find($data['frontId']);
         $rearDerailleur = $this->documentManager
-            ->getRepository(RearDerailleur::class)->find($request->get('rearId'));
+            ->getRepository(RearDerailleur::class)->find($data['rearId']);
         $numberOfGearCombinations = $this->calculateGearCombinationCountService->calculate(
             $frontDerailleur->getMaxCogCount(),
             $rearDerailleur->getMaxCogCount()

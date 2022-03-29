@@ -3,11 +3,10 @@ let specifications = {
         $.ajax({
             type: "POST",
             url: route,
-            contentType: "application/json",
-            dataType: "json",
+            contentType: 'application/json',
             data: JSON.stringify({
-                frontId: $( '[id*="_frontDerailleur"] option:selected' ).val(),
-                rearId: $( '[id*="_rearDerailleur"] option:selected' ).val()
+                frontId: $('[id*="_frontDerailleur"] option:selected').val(),
+                rearId: $('[id*="_rearDerailleur"] option:selected').val()
             }),
             success: function(response) {
                 console.log(response);

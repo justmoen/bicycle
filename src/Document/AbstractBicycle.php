@@ -11,19 +11,15 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 abstract class AbstractBicycle implements BicycleInterface
 {
-    public const BICYCLE_TYPE_ELECTRIC = 'Electric';
-    public const BICYCLE_TYPE_ROAD = 'Road';
-    public const BICYCLE_TYPE_MOUNTAIN = 'Mountain';
+    /**
+     * @MongoDB\Id
+     */
+    protected string $id;
 
     /**
      * @MongoDB\ReferenceMany()
      */
     protected Collection $components;
-
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    protected string $type;
 
     /**
      * @MongoDB\Field(type="string")
@@ -53,6 +49,14 @@ abstract class AbstractBicycle implements BicycleInterface
     public function __construct()
     {
         $this->components = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     /**
@@ -113,24 +117,6 @@ abstract class AbstractBicycle implements BicycleInterface
     /**
      * @return string
      */
-    public function getType(): string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param string $type
-     * @return AbstractBicycle
-     */
-    public function setType(string $type): AbstractBicycle
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
@@ -181,4 +167,9 @@ abstract class AbstractBicycle implements BicycleInterface
         $this->weight = $weight;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getType(): string;
 }

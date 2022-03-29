@@ -19,7 +19,6 @@ abstract class AbstractBicycleType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('type', HiddenType::class)
             ->add('frontDerailleur', DocumentType::class, [
                 'class' => FrontDerailleur::class,
                 'mapped' => false,

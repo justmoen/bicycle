@@ -15,8 +15,7 @@ class BicycleDataService
      * @return BicycleInterface|false
      */
     public function processFormData(
-        FormInterface $form,
-        BicycleInterface $mockBicycle
+        FormInterface $form
     ): bool|BicycleInterface {
         /**
          * @var BicycleInterface $bicycle
@@ -30,7 +29,6 @@ class BicycleDataService
          * @var RearDerailleur $rearDerailleur
          */
         $rearDerailleur = $form->get('rearDerailleur')->getData();
-        $bicycle->setType($mockBicycle->getType());
         if (
             $frontDerailleur &&
             $rearDerailleur

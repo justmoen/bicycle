@@ -8,29 +8,19 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 /**
  * @MongoDB\Document
  */
-class ElectricBicycle extends AbstractBicycle implements BicycleInterface
+class ElectricBicycle extends Bicycle implements BicycleInterface
 {
-    /**
-     * @MongoDB\Id
-     */
-    private string $id;
-
     /**
      * @MongoDB\Field(type="float")
      */
     private float $batteryCapacity;
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
      */
     public function getType(): string
     {
-        return AbstractBicycle::BICYCLE_TYPE_ELECTRIC;
+        return parent::BICYCLE_TYPE_ELECTRIC;
     }
 
     /**

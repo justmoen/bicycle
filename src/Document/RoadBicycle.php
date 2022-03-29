@@ -5,27 +5,16 @@ namespace App\Document;
 use App\Document\Interface\BicycleInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/** @MongoDB\Document */
-class RoadBicycle extends AbstractBicycle implements BicycleInterface
+/**
+ * @MongoDB\Document
+ */
+class RoadBicycle extends Bicycle implements BicycleInterface
 {
-    /**
-     * @MongoDB\Id
-     */
-    private string $id;
-
-    /**
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
     /**
      * @return string
      */
     public function getType(): string
     {
-        return AbstractBicycle::BICYCLE_TYPE_ROAD;
+        return parent::BICYCLE_TYPE_ROAD;
     }
 }

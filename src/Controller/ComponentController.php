@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Document\Component\AbstractComponent;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use App\Form\SelectComponentType;
@@ -129,10 +130,7 @@ class ComponentController extends AbstractController
         $form = $this->getForm($class, $newClass);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $component = $this->componentDataService->processFormData(
-                $form,
-                $newClass
-            );
+            $component = $form->getData();
             $this->documentManager->persist($component);
             $this->documentManager->flush();
             return $this->redirectToRoute('component_select');
@@ -142,17 +140,16 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @param string $type
      * @param string $id
      * @return Response
      * @throws LockException
      * @throws MappingException
      */
-    #[Route('component/edit/{type}/{id}', name: 'component_edit', methods: ["GET"])]
-    public function edit(string $type, string $id): Response
+    #[Route('component/edit/{id}', name: 'component_edit', methods: ["GET"])]
+    public function edit(string $id): Response
     {
-        $class = '\\App\\Document\\' . $type;
-        $component = $this->documentManager->getRepository($class)->find($id);
+        $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
+        $class = get_class($component);
         $form = $this->getForm($class, $component);
         return $this->render('component/create.html.twig', [
             'form' => $form->createView(),
@@ -167,11 +164,11 @@ class ComponentController extends AbstractController
      * @throws MongoDBException
      * @throws LockException
      */
-    #[Route('component/edit/{type}/{id}', name: 'component_edit_post', methods: ["POST"])]
-    public function editPost(Request $request, string $type, string $id): Response
+    #[Route('component/edit/{id}', name: 'component_edit_post', methods: ["POST"])]
+    public function editPost(Request $request, string $id): Response
     {
-        $class = '\\App\\Document\\' . $type;
-        $component = $this->documentManager->getRepository($class)->find($id);
+        $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
+        $class = get_class($component);
         $form = $this->getForm($class, $component);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -183,16 +180,14 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @throws MappingException
      * @throws LockException
      * @throws MongoDBException
+     * @throws MappingException
      */
-    #[Route('component/delete/{type}/{id}', name: 'component_delete', methods: ["GET"])]
-    public function delete(string $type, string $id): RedirectResponse
+    #[Route('component/delete/{id}', name: 'component_delete', methods: ["GET"])]
+    public function delete(string $id): RedirectResponse
     {
-        $class = '\\App\\Document\\' . $type;
-        $component = $this->documentManager->getRepository($class)->find($id);
-        $this->documentManager->remove($component);
+        $this->componentDataService->delete($id);
         $this->documentManager->flush();
         $this->addFlash('success', 'Component successfully removed');
         return $this->redirectToRoute('component_select');
