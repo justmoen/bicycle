@@ -32,7 +32,9 @@ class ComponentDataService
     public function delete(string $id)
     {
         $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
-        $bicycles = $this->documentManager->getRepository(Bicycle::class)->findBy(['components.id' => $id]);
+        // @TODO not sure why this query does not work
+        // $bicycles = $this->documentManager->getRepository(Bicycle::class)->findBy(['components.id' => $id]);
+        $bicycles = $this->documentManager->getRepository(Bicycle::class)->findAll();
         foreach ($bicycles as $bicycle) {
             $bicycle->removeComponent($component);
         }

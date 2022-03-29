@@ -17,7 +17,7 @@ abstract class AbstractBicycle implements BicycleInterface
     protected string $id;
 
     /**
-     * @MongoDB\ReferenceMany()
+     * @MongoDB\ReferenceMany
      */
     protected Collection $components;
 
