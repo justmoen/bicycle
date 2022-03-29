@@ -2,7 +2,7 @@
 
 namespace App\Tests\Service;
 
-use App\Document\FrontDerailleur;
+use App\Document\Component\FrontDerailleur;
 use App\Document\RoadBicycle;
 use App\Service\ObjectToArrayService;
 use Doctrine\Common\Collections\ArrayCollection;
