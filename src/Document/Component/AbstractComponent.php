@@ -7,7 +7,7 @@ use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
 /**
- * @MongoDB\Document("Component")
+ * @MongoDB\Document
  * @MongoDB\InheritanceType("SINGLE_COLLECTION")
  * @MongoDB\DiscriminatorField("type")
  * @MongoDB\DiscriminatorMap({
