@@ -15,13 +15,26 @@
     </div>
     <div class="grid-x">
         {{ form_start(form) }}
-        <div class="cell">
+        <div class="cell medium-6">
             <div class="grid-x">
                 {% include 'showFlash.html.twig' %}
             </div>
             {% include 'bicycle/_base-form.html.twig' %}
             {% include 'bicycle/' ~ bicycleType|replace({' ': ''})|lcFirst ~ '/form.html.twig' %}
             {{ form_widget(form.submit) }}
+        </div>
+        <div class="cell medium-6">
+            <div class="grid-x">
+                <h4>Specifications:</h4>
+            </div>
+            <div class="grid-x">
+                <div class="cell medium-6">
+                    # of Gears:
+                </div>
+                <div id="speed" class="cell medium-6">
+
+                </div>
+            </div>
         </div>
         {{ form_end(form) }}
     </div>
