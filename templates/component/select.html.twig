@@ -1,15 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div><input type="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" /></div>
-    <div>
+    <div class="grid-x">
+        <input type="button" class="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" />
+    </div>
+    <div class="grid-x">
         <h2>Add Components</h2>
     </div>
-    <div>
-        {% include 'showFlash.html.twig' %}
+    <div class="grid-x">
         {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
+        <div class="cell">
+            <div class="grid-x">
+                {% include 'showFlash.html.twig' %}
+            </div>
+            <div class="grid-x">
+                <div class="cell">
+                    {{ form_row(form.componentType) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
     </div>
     {% include 'component/list.html.twig' %}
 {% endblock %}

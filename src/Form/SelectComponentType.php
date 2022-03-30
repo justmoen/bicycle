@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Document\Component\AbstractComponent;
+use App\Document\Component\Component;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use Symfony\Component\Form\AbstractType;
@@ -18,10 +18,10 @@ class SelectComponentType extends AbstractType
             ->add('componentType', ChoiceType::class, [
                 'label' => 'Select Component Type',
                 'choices' => [
-                    AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR => FrontDerailleur::class,
-                    AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR => RearDerailleur::class
+                    Component::COMPONENT_TYPE_FRONT_DERAILLEUR => FrontDerailleur::class,
+                    Component::COMPONENT_TYPE_REAR_DERAILLEUR => RearDerailleur::class
                 ]
             ])
-            ->add('next', SubmitType::class);
+            ->add('next', SubmitType::class, ['attr' => ['class' => 'button']]);
     }
 }

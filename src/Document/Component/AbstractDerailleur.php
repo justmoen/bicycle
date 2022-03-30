@@ -5,7 +5,7 @@ namespace App\Document\Component;
 use App\Document\Interface\ComponentInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-abstract class AbstractDerailleur extends AbstractComponent implements ComponentInterface
+abstract class AbstractDerailleur extends Component implements ComponentInterface
 {
     /**
      * @MongoDB\Field(type="int")

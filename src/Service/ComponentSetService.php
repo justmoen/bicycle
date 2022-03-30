@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\Document\Component\AbstractComponent;
+use App\Document\Component\Component;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use Doctrine\ODM\MongoDB\DocumentManager;
@@ -40,9 +40,9 @@ class ComponentSetService
         $frontDerailleurs = $this->documentManager->getRepository(FrontDerailleur::class)->findAll();
         $rearDerailleurs = $this->documentManager->getRepository(RearDerailleur::class)->findAll();
         return [
-            AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR =>
+            Component::COMPONENT_TYPE_FRONT_DERAILLEUR =>
                 $toArray ? $this->objectToArrayService->convert($frontDerailleurs) : $frontDerailleurs,
-            AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR =>
+            Component::COMPONENT_TYPE_REAR_DERAILLEUR =>
                 $toArray ? $this->objectToArrayService->convert($rearDerailleurs) : $rearDerailleurs
         ];
     }

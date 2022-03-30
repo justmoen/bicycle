@@ -1,32 +1,38 @@
-<div>
-    {% for componentType,componentSet in componentSets %}
-        <div>
-            <h3>{{ componentType }}</h3>
-        </div>
-        {% if componentSet|length > 0 %}
-        <div>
-            <table>
-                <thead>
-                    {% for key, value in componentSet[0] %}
-                        <th>{{ key }}</th>
-                    {% endfor %}
-                    <th>Action</th>
-                </thead>
-                <tbody>
-                {% for component in componentSet %}
-                    <tr>
-                        {% for key, value in component %}
-                            <td>{{ value }}</td>
+<div class="grid-x">
+    <div class="cell">
+        {% for componentType,componentSet in componentSets %}
+            <div class="x-grid">
+                <div class="cell">
+                    <h3>{{ componentType }}</h3>
+                </div>
+            </div>
+            {% if componentSet|length > 0 %}
+            <div class="x-grid">
+                <div class="cell">
+                    <table>
+                        <thead>
+                            {% for key, value in componentSet[0] %}
+                                <th>{{ key }}</th>
+                            {% endfor %}
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                        {% for component in componentSet %}
+                            <tr>
+                                {% for key, value in component %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                                <td>
+                                    <div><a href="{{ path('component_edit', {id: component.Id}) }}">Edit</a></div>
+                                    <div><a href="{{ path('component_delete', {id: component.Id}) }}">Delete</a></div>
+                                </td>
+                            </tr>
                         {% endfor %}
-                        <td>
-                            <div><a href="{{ path('component_edit', {id: component.Id}) }}">Edit</a></div>
-                            <div><a href="{{ path('component_delete', {id: component.Id}) }}">Delete</a></div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
-    {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>

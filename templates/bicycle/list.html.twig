@@ -1,32 +1,38 @@
-<div>
-    {% for bicycleType, bicycleSet in bicycleSets %}
-        <div>
-            <h3>{{ bicycleType }}</h3>
-        </div>
-        {% if bicycleSet|length > 0 %}
-        <div>
-            <table>
-                <thead>
-                {% for key, value in bicycleSet[0] %}
-                    <th>{{ key }}</th>
-                {% endfor %}
-                <th>Action</th>
-                </thead>
-                <tbody>
-                {% for bicycle in bicycleSet %}
-                    <tr>
-                        {% for key, value in bicycle %}
-                            <td>{{ value }}</td>
+<div class="grid-x">
+    <div class="cell">
+        {% for bicycleType, bicycleSet in bicycleSets %}
+            <div class="grid-x">
+                <div class="cell">
+                    <h3>{{ bicycleType }}</h3>
+                </div>
+            </div>
+            {% if bicycleSet|length > 0 %}
+            <div class="grid-x">
+                <div class="cell">
+                    <table>
+                        <thead>
+                        {% for key, value in bicycleSet[0] %}
+                            <th>{{ key }}</th>
                         {% endfor %}
-                        <td>
-                            <div><a href="{{ path('bicycle_edit', {id: bicycle.Id}) }}">Edit</a></div>
-                            <div><a href="{{ path('bicycle_delete', {id: bicycle.Id}) }}">Delete</a></div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
-    {% endfor %}
+                        <th>Action</th>
+                        </thead>
+                        <tbody>
+                        {% for bicycle in bicycleSet %}
+                            <tr>
+                                {% for key, value in bicycle %}
+                                    <td>{{ value }}</td>
+                                {% endfor %}
+                                <td>
+                                    <div><a href="{{ path('bicycle_edit', {id: bicycle.Id}) }}">Edit</a></div>
+                                    <div><a href="{{ path('bicycle_delete', {id: bicycle.Id}) }}">Delete</a></div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 </div>

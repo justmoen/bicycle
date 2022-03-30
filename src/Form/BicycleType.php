@@ -24,6 +24,6 @@ class BicycleType extends AbstractType
                     Bicycle::BICYCLE_TYPE_MOUNTAIN => MountainBicycle::class
                 ]
             ])
-            ->add('next', SubmitType::class);
+            ->add('next', SubmitType::class, ['attr' => ['class' => 'button']]);
     }
 }

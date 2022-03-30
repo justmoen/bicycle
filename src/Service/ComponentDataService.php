@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Document\Bicycle;
-use App\Document\Component\AbstractComponent;
+use App\Document\Component\Component;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\LockException;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
@@ -31,7 +31,7 @@ class ComponentDataService
      */
     public function delete(string $id)
     {
-        $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
+        $component = $this->documentManager->getRepository(Component::class)->find($id);
         // @TODO not sure why this query does not work
         // $bicycles = $this->documentManager->getRepository(Bicycle::class)->findBy(['components.id' => $id]);
         $bicycles = $this->documentManager->getRepository(Bicycle::class)->findAll();

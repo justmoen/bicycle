@@ -1,14 +1,24 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
-    <div><input type="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" /></div>
-    <div>
+    <div class="grid-x">
+        <input type="button" class="button" value="Home" onclick="location.href = '{{ path('home_page') }}';" />
+    </div>
+    <div class="grid-x">
         <h2>Create {{ componentType }}</h2>
     </div>
-    {% include 'showFlash.html.twig' %}
-    {{ form_start(form) }}
-    {{ form_widget(form.submit) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    <div class="grid-x">
+        {{ form_start(form) }}
+        <div class="cell">
+            <div class="grid-x">
+                {% include 'showFlash.html.twig' %}
+            </div>
+            {% include 'component/_base-form.html.twig' %}
+            {% include 'component/' ~ componentType|replace({' ': ''})|lcFirst ~ '/form.html.twig' %}
+            <div class="grid-x">
+                {{ form_widget(form.submit) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
     {% include 'component/list.html.twig' %}
 {% endblock %}

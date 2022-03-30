@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Document\Component\AbstractComponent;
+use App\Document\Component\Component;
 use App\Document\Component\FrontDerailleur;
 use App\Document\Component\RearDerailleur;
 use App\Form\SelectComponentType;
@@ -148,7 +148,7 @@ class ComponentController extends AbstractController
     #[Route('component/edit/{id}', name: 'component_edit', methods: ["GET"])]
     public function edit(string $id): Response
     {
-        $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
+        $component = $this->documentManager->getRepository(Component::class)->find($id);
         $class = get_class($component);
         $form = $this->getForm($class, $component);
         return $this->render('component/create.html.twig', [
@@ -167,7 +167,7 @@ class ComponentController extends AbstractController
     #[Route('component/edit/{id}', name: 'component_edit_post', methods: ["POST"])]
     public function editPost(Request $request, string $id): Response
     {
-        $component = $this->documentManager->getRepository(AbstractComponent::class)->find($id);
+        $component = $this->documentManager->getRepository(Component::class)->find($id);
         $class = get_class($component);
         $form = $this->getForm($class, $component);
         $form->handleRequest($request);

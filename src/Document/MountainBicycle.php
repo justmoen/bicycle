@@ -13,7 +13,7 @@ class MountainBicycle extends Bicycle implements BicycleInterface
     /**
      * @var bool
      */
-    private bool $hasRearSuspension;
+    private bool $isRearSuspension;
 
     /**
      * @return string
@@ -26,18 +26,18 @@ class MountainBicycle extends Bicycle implements BicycleInterface
     /**
      * @return bool
      */
-    public function isHasRearSuspension(): bool
+    public function getIsRearSuspension(): bool
     {
-        return $this->hasRearSuspension;
+        return $this->isRearSuspension;
     }
 
     /**
-     * @param bool $hasRearSuspension
+     * @param bool $isRearSuspension
      * @return MountainBicycle
      */
-    public function setHasRearSuspension(bool $hasRearSuspension): MountainBicycle
+    public function setIsRearSuspension(bool $isRearSuspension): MountainBicycle
     {
-        $this->hasRearSuspension = $hasRearSuspension;
+        $this->isRearSuspension = $isRearSuspension;
         return $this;
     }
 }

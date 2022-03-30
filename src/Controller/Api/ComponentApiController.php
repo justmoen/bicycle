@@ -2,7 +2,7 @@
 
 namespace App\Controller\Api;
 
-use App\Document\Abstract\AbstractComponent;
+use App\Document\Component\Component;
 use App\Service\CrudServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,8 +32,8 @@ class ComponentApiController extends AbstractController
         $component = json_decode($request->getContent(), true);
         // @TODO add validation
         $result = $this->crudService->add(
-            'Bicycle',
-            AbstractComponent::COMPONENT_COLLECTION,
+            'default',
+            Component::COMPONENT_COLLECTION,
             $component
         );
         return new JsonResponse([

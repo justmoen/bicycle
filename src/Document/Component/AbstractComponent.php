@@ -6,20 +6,8 @@ use App\Document\Interface\ComponentInterface;
 use DateTime;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-/**
- * @MongoDB\Document
- * @MongoDB\InheritanceType("SINGLE_COLLECTION")
- * @MongoDB\DiscriminatorField("type")
- * @MongoDB\DiscriminatorMap({
- *     AbstractComponent::COMPONENT_TYPE_FRONT_DERAILLEUR=FrontDerailleur::class,
- *     AbstractComponent::COMPONENT_TYPE_REAR_DERAILLEUR=RearDerailleur::class,
- *     })
- */
 abstract class AbstractComponent implements ComponentInterface
 {
-    public const COMPONENT_TYPE_FRONT_DERAILLEUR = 'Front Derailleur';
-    public const COMPONENT_TYPE_REAR_DERAILLEUR = 'Rear Derailleur';
-
     /**
      * @MongoDB\Id
      */

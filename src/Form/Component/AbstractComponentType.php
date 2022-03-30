@@ -15,9 +15,9 @@ abstract class AbstractComponentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('price', MoneyType::class)
+            ->add('price', MoneyType::class, ['currency' => ''])
             ->add('name', TextType::class)
             ->add('weight', NumberType::class)
-            ->add('submit', SubmitType::class);
+            ->add('submit', SubmitType::class, ['attr' => ['class' => 'button']]);
     }
 }
