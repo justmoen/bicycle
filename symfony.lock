@@ -53,11 +53,35 @@
             "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
         }
     },
+    "friendsofsymfony/rest-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.2",
+            "ref": "fa845143b7e0a4c70aedd1a88c549e6d977e9ae5"
+        }
+    },
     "hamcrest/hamcrest-php": {
         "version": "v2.0.1"
     },
     "jean85/pretty-package-versions": {
         "version": "2.0.5"
+    },
+    "jms/metadata": {
+        "version": "2.6.1"
+    },
+    "jms/serializer": {
+        "version": "3.17.1"
+    },
+    "jms/serializer-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
+        }
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
@@ -91,6 +115,9 @@
     },
     "phpspec/prophecy": {
         "version": "v1.15.0"
+    },
+    "phpstan/phpdoc-parser": {
+        "version": "1.4.2"
     },
     "phpunit/php-code-coverage": {
         "version": "9.2.15"
@@ -284,6 +311,9 @@
     "symfony/options-resolver": {
         "version": "v6.0.3"
     },
+    "symfony/password-hasher": {
+        "version": "v6.0.3"
+    },
     "symfony/phpunit-bridge": {
         "version": "6.0",
         "recipe": {
@@ -336,6 +366,9 @@
     "symfony/runtime": {
         "version": "v6.0.5"
     },
+    "symfony/security-core": {
+        "version": "v6.0.7"
+    },
     "symfony/serializer": {
         "version": "v6.0.6"
     },
@@ -346,10 +379,10 @@
         "version": "v6.0.3"
     },
     "symfony/translation-contracts": {
-        "version": "v3.0.0"
+        "version": "v3.0.1"
     },
     "symfony/twig-bridge": {
-        "version": "v6.0.5"
+        "version": "v6.0.7"
     },
     "symfony/twig-bundle": {
         "version": "6.0",
@@ -362,6 +395,18 @@
         "files": [
             "config/packages/twig.yaml",
             "templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.3",
+            "ref": "c32cfd98f714894c4f128bb99aa2530c1227603c"
+        },
+        "files": [
+            "config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {
@@ -396,12 +441,15 @@
         "version": "1.2.1"
     },
     "twig/twig": {
-        "version": "v3.3.9"
+        "version": "v3.3.10"
     },
     "webmozart/assert": {
         "version": "1.10.0"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v2.0.0"
+    },
+    "willdurand/negotiation": {
+        "version": "3.1.0"
     }
 }
